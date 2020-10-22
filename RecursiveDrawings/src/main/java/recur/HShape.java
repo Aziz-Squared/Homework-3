@@ -1,4 +1,4 @@
-package RecursiveDrawings.src.main.java.recur;
+package recur;
 
 public class HShape extends AbstractShape{
     

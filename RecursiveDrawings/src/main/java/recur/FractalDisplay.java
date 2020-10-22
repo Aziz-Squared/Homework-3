@@ -1,4 +1,4 @@
-package RecursiveDrawings.src.main.java.recur;
+package recur;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

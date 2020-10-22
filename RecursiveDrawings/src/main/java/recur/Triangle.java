@@ -1,4 +1,4 @@
-package RecursiveDrawings.src.main.java.recur;
+package recur;
 
 public class Triangle extends AbstractShape{
     

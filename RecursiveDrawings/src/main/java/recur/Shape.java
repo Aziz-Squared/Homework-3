@@ -1,4 +1,4 @@
-package RecursiveDrawings.src.main.java.recur;
+package recur;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
