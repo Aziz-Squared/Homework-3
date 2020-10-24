@@ -1,8 +1,15 @@
 package recur;
 
 import java.awt.Graphics;
+import java.awt.Color;
 
 public class AbstractShape implements Shape {
+
+    protected int level;
+    protected int maxLevel;
+    protected AbstractShape[] children;
+    protected Color color;
+    
 
     @Override
     public void draw(Graphics g) {
