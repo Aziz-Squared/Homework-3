@@ -2,22 +2,26 @@ package recur;
 
 import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Point;
 
 public class AbstractShape implements Shape {
 
-    protected int level;
-    protected int maxLevel;
-    protected AbstractShape[] children;
-    protected Color color;
+    protected static int level;
+    protected static int maxLevel;
+    protected static AbstractShape[] children;
+    protected static Color color;
+
+    public AbstractShape(){
     
-
-    @Override
-    public void draw(Graphics g) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
+    public void draw(Graphics g) {
+        
+
+    }
+
+    
     public boolean addLevel() {
         // TODO Auto-generated method stub
         return false;
@@ -41,6 +45,4 @@ public class AbstractShape implements Shape {
 
     }
 
-    
-    
 }

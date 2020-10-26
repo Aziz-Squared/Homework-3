@@ -1,5 +1,12 @@
 package recur;
 
-public class HShape extends AbstractShape{
+import java.awt.Color;
+
+public class HShape extends AbstractShape {
+
+    public HShape() {
+        
+        
+    }
     
 }
