@@ -23,8 +23,13 @@ public class AbstractShape implements Shape {
 
     
     public boolean addLevel() {
+        if (children == null) {
+            // need code to add level
+            return true;
+        } else {
         // TODO Auto-generated method stub
-        return false;
+            return false;
+        }
     }
 
     @Override
@@ -32,6 +37,7 @@ public class AbstractShape implements Shape {
         if (children == null) {
             return false;
         } else {
+            // need code to remove level
             return true;
         }
     }
@@ -39,7 +45,13 @@ public class AbstractShape implements Shape {
     @Override
     public int countShapes() {
         // TODO Auto-generated method stub
-        return 0;
+        if (level == 1) {
+			return 1;
+		}
+		else {
+			level --;
+			return 1 + 3 * countShapes();
+		}
     }
 
     @Override
