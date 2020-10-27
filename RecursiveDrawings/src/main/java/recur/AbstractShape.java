@@ -29,8 +29,11 @@ public class AbstractShape implements Shape {
 
     @Override
     public boolean removeLevel() {
-        // TODO Auto-generated method stub
-        return false;
+        if (children == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override
