@@ -34,13 +34,12 @@ public class Triangle extends AbstractShape {
     @Override
     public boolean addLevel() {
         
-        if (level == 1){
+        if (children == null) {
+            // need code to add a level
             return true;
         } else {
-            
+            return addLevel();
         }
-        
-        return addLevel();
     }
 
     public Point midPoint(Point p1, Point p2){
