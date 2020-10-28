@@ -22,24 +22,31 @@ public class AbstractShape implements Shape {
     }
 
     
-    public boolean addLevel() {
-        if (children == null) {
-            // need code to add level
-            return true;
-        } else {
-        // TODO Auto-generated method stub
-            return false;
-        }
-    }
+    public boolean addLevel() 
+	    if (children[0] == null) {
+            	if (level != maxLevel) {
+			createChildren();
+            		return false;
+		}
+	    } else {
+		    for (int i = 0; i < children.length; i++) {
+			    children[i].addLevel();
+		    }
+	    }
+	return true;
+}
+
 
     @Override
     public boolean removeLevel() {
-        if (children == null) {
-            return false;
+       if (children[0] == null && children[0].children[0] != null) {
+		return true;
         } else {
-            // need code to remove level
-            return true;
-        }
+            for (int i = 0; i < children.length; i++) {
+		    children[i].removeLevel();
+	    }
+	}
+	    return false;
     }
 
     @Override
@@ -50,7 +57,7 @@ public class AbstractShape implements Shape {
 		}
 		else {
 			level --;
-			return 1 + 3 * countShapes();
+			return 1 + children.length * countShapes();
 		}
     }
 
