@@ -27,7 +27,7 @@ public class Triangle extends AbstractShape {
         polygon.addPoint(pointA.x, pointA.y);
         polygon.addPoint(pointB.x, pointB.y);
         polygon.addPoint(pointC.x, pointC.y);
-        
+    }
 
    public static void drawTriangle(Graphics g, Point p1, Point p2, Point p3) {
 
