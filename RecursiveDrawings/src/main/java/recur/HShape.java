@@ -5,7 +5,7 @@ import java.awt.Color;
 public class HShape extends AbstractShape {
     
     public HShape() {
-        super();
+        super(7);
     }
     
    

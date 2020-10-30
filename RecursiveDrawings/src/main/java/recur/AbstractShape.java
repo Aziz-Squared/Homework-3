@@ -10,6 +10,11 @@ public class AbstractShape implements Shape {
     protected static AbstractShape[] children;
     protected static Color color;
 
+    public AbstractShape(int amountOfChildren){
+        children = new AbstractShape[amountOfChildren];
+
+    }
+
     @Override
     public void draw(Graphics g) {
 
@@ -21,15 +26,20 @@ public class AbstractShape implements Shape {
             // create children
             // add a createChildren method to the Shape interface
             // that is implemented in each of the concrete classes
+            createChildren();
+            System.out.println("added a level");
 
         } else {
             // recursion
             // loop over the children
             // children[i].addLevel()
+            for (int i = 0; i < 2; i++){
+                children[i].addLevel();
+            }
 
         }
 
-        return false;
+        return true;
     }
 
     @Override
