@@ -10,8 +10,12 @@ public class AbstractShape implements Shape {
     protected static AbstractShape[] children;
     protected static Color color;
 
-    public AbstractShape(int amountOfChildren){
+    public AbstractShape(int amountOfChildren) {
         children = new AbstractShape[amountOfChildren];
+
+    }
+
+    public AbstractShape() {
 
     }
 
@@ -27,14 +31,16 @@ public class AbstractShape implements Shape {
             // add a createChildren method to the Shape interface
             // that is implemented in each of the concrete classes
             createChildren();
-            System.out.println("added a level");
+            level++;
+            System.out.println(level);
 
         } else {
             // recursion
             // loop over the children
             // children[i].addLevel()
-            for (int i = 0; i < 2; i++){
+            for (int i = 0; i < children.length - 1; i++) {
                 children[i].addLevel();
+                System.out.println("Adding levels to children");
             }
 
         }
@@ -47,15 +53,20 @@ public class AbstractShape implements Shape {
 
         // base case is if there are no grandchildren
         if (children[0] != null && children[0].children[0] == null) {
+            children = null;
 
         } else {
             // recursion
             // loop over the children
             // children[i].removeLevel()
 
+            for (int i = 0; i <= children.length - 1; i++) {
+                children[i].removeLevel();
+            }
+
         }
 
-        return true;
+        return false;
     }
 
     @Override
