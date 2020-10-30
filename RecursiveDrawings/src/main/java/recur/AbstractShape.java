@@ -23,6 +23,7 @@ public class AbstractShape implements Shape {
 
     
     public boolean addLevel() 
+	    level++;
 /*	 if (children[0] == null) {
             if (level != maxLevel) {
 			createChildren();
