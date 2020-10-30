@@ -22,7 +22,7 @@ public class AbstractShape implements Shape {
     }
 
     
-    public boolean addLevel() 
+    public boolean addLevel() {
 	    level++;
 /*	 if (children[0] == null) {
             if (level != maxLevel) {
@@ -41,6 +41,7 @@ public class AbstractShape implements Shape {
 
     private void createChildren() {
 	    //TODO Auto-generated method stub
+    }
 
 
     @Override
