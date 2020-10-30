@@ -6,7 +6,7 @@ import java.awt.Point;
 
 public class AbstractShape implements Shape {
 
-    protected static int level;
+    protected static int level = 1;
     protected static int maxLevel;
     protected static AbstractShape[] children;
     protected static Color color;

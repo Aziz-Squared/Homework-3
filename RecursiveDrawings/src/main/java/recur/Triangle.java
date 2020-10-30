@@ -9,7 +9,8 @@ public class Triangle extends AbstractShape {
 
     
     Polygon polygon;
-    public int size;
+    int size;
+    int triangleHeight;
     Point pointA;
     Point pointB;
     Point pointC;
@@ -20,7 +21,7 @@ public class Triangle extends AbstractShape {
         size = s;
         level = 1;
 
-        int triangleHeight = (int) Math.round(size * Math.sqrt(3.0) / 2.0);
+        triangleHeight = (int) Math.round(size * Math.sqrt(3.0) / 2.0);
         pointA = new Point(0, triangleHeight);
         pointB = new Point(size / 2, 0);
         pointC = new Point(size, triangleHeight);
@@ -35,9 +36,12 @@ public class Triangle extends AbstractShape {
     public boolean addLevel() {
         
         if (level == 1){
+            level++;
             return true;
-        } else {
-            
+        } else if(level == 10){
+            return false;
+        } else{
+            System.out.println("on level: " + level);
         }
         
         return addLevel();

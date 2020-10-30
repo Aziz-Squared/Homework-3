@@ -6,11 +6,11 @@ import java.awt.Point;
 
 public interface Shape {
 
-    public void draw(Graphics g);
-    public boolean addLevel();
-    public boolean removeLevel();
-    public int countShapes();
-    public void update(int value);
+    public void draw(Graphics g); // Draw the shape
+    public boolean addLevel(); // Adds a level to the shape. Returns true if it worked or false if max levels reached
+    public boolean removeLevel(); // Removes a level from the shape
+    public int countShapes(); // Counts the number of shapes of this shape
+    public void update(int value); // Modifies the shape in an interesting way
 
     
 }
