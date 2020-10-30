@@ -6,7 +6,7 @@ import java.awt.Point;
 
 public class AbstractShape implements Shape {
 
-    protected static int level;
+    protected static int level = 1;
     protected static int maxLevel;
     protected static AbstractShape[] children;
     protected static Color color;
@@ -23,30 +23,36 @@ public class AbstractShape implements Shape {
 
     
     public boolean addLevel() 
-	    if (children[0] == null) {
-            	if (level != maxLevel) {
+/*	 if (children[0] == null) {
+            if (level != maxLevel) {
 			createChildren();
             		return false;
 		}
-	    } else {
+	  } else {
 		    for (int i = 0; i < children.length; i++) {
-			    children[i].addLevel();
-		    }
-	    }
+			   children[i].addLevel();
+		   }
+	 }
+*/
 	return true;
 }
 
 
+    private void createChildren() {
+	    //TODO Auto-generated method stub
+
+
     @Override
     public boolean removeLevel() {
-       if (children[0] == null && children[0].children[0] != null) {
+	    level--;
+/*       if (children[0] == null && children[0].children[0] != null) {
 		return true;
         } else {
             for (int i = 0; i < children.length; i++) {
 		    children[i].removeLevel();
 	    }
 	}
-	    return false;
+*/	    return true;
     }
 
     @Override
