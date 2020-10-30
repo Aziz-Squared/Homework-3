@@ -1,15 +1,14 @@
 package recur;
 
-public class KochCurve extends AbstractShape{
-    
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class MyShape extends AbstractShape {
+public class KochCurve extends AbstractShape{
 
-	MyShape( Graphics g,double height, double width) {
+
+	KochCurve( Graphics g,double height, double width) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(3));
 		g2.setColor(Color.GREEN);				
