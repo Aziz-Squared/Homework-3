@@ -2,7 +2,6 @@ package recur;
 
 import java.awt.Graphics;
 import java.awt.Color;
-import java.awt.Point;
 
 public class AbstractShape implements Shape {
 
@@ -11,37 +10,57 @@ public class AbstractShape implements Shape {
     protected static AbstractShape[] children;
     protected static Color color;
 
-    public AbstractShape(){
-    
-    }
-
     @Override
     public void draw(Graphics g) {
-        
 
     }
 
-    
     public boolean addLevel() {
-        // TODO Auto-generated method stub
+
+        if (children[0] == null) {
+            // create children
+            // add a createChildren method to the Shape interface
+            // that is implemented in each of the concrete classes
+
+        } else {
+            // recursion
+            // loop over the children
+            // children[i].addLevel()
+
+        }
+
         return false;
     }
 
     @Override
     public boolean removeLevel() {
-        // TODO Auto-generated method stub
-        return false;
+
+        // base case is if there are no grandchildren
+        if (children[0] != null && children[0].children[0] == null) {
+
+        } else {
+            // recursion
+            // loop over the children
+            // children[i].removeLevel()
+
+        }
+
+        return true;
     }
 
     @Override
     public int countShapes() {
-        // TODO Auto-generated method stub
+
         return 0;
     }
 
     @Override
     public void update(int value) {
-        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void createChildren() {
 
     }
 

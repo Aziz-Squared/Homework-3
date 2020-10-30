@@ -69,6 +69,7 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
 	// -> triggered by a right click of the the mouse.
 	private JPopupMenu popup;
 	private JLabel popupLabel;
+	private FractalDisplay display; //The display area.
 
 	/**
 	 * Constructs a FractalDisplay to display fractal shapes
@@ -163,26 +164,11 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
 					break;
 				}
 			}
-			switch (which) {
-			case SIERPINSKI_TRIANGLE:
-				// TODO
-				// Call your SierpinskiTriangle constructor here
-				// replace shape = null with shape = new SierpinskiTriangle(...)
-				shape = new Triangle(800);
-				break;
-			case H_SHAPE:
-				// TODO
-				// Call your HShape constructor here
-				// Replace shape = null with shape = new HShape(...))
-				shape = new HShape();
-				break;
-			case MY_SHAPE:
-				// TODO
-				// Call your MyShape constructor here
-				// Replace shape = null with shape = new MyShape(...))
-				shape = new MyShape();
-				break;
-			}
+			
+			//	repaint();
+	
+	
+			drawShape(which);
 		} else if (e.getSource() == addLevel) {
 			// Don't do anything if there is no display
 			if (shape != null) {
@@ -191,6 +177,7 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
 					JOptionPane.showMessageDialog(this, "Can't add another level", "Message",
 					        JOptionPane.WARNING_MESSAGE);
 				}
+				drawShape(which);
 			}
 		} else if (e.getSource() == removeLevel) {
 			// Don't do anything if there is no display
@@ -200,6 +187,8 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
 					JOptionPane.showMessageDialog(this, "Can't remove another level", "Message",
 					        JOptionPane.WARNING_MESSAGE);
 				}
+
+				drawShape(which);
 			}
 		} else {
 			// unknown source
@@ -207,7 +196,7 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
 		}
 
 		// display the new drawing
-		repaint();
+		//repaint();
 	}
 
 	/**
@@ -276,5 +265,34 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
 	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> new FractalDisplay());
+	}
+	
+	private void drawShape(int which ) {
+		switch (which) {
+		case SIERPINSKI_TRIANGLE:
+			// TODO
+			// Call your SierpinskiTriangle constructor here
+			// replace shape = null with shape = new SierpinskiTriangle(...)
+			//getGraphics();
+			//drawSierpinskiTriangle()				
+			shape = new SierpinskiTriangle(getGraphics());
+			//shape.addLevel();
+			
+			break;
+		case H_SHAPE:
+			// TODO
+			// Call your HShape constructor here
+			// Replace shape = null with shape = new HShape(...))
+			shape = new HShape();
+			break;
+		case MY_SHAPE:
+			// TODO
+			// Call your MyShape constructor here
+			// Replace shape = null with shape = new MyShape(...))
+			shape = new KochCurve(getGraphics(), HEIGHT, WIDTH);
+			break;
+		}
+
+		
 	}
 }
