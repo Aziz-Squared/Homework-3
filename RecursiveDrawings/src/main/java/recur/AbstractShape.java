@@ -20,7 +20,7 @@ public abstract class AbstractShape implements Shape {
     public boolean addLevel() {
 
         if (children[0] == null) {
-            if (level <= maxLevel) {
+            if (level < maxLevel) {
                 createChildren();
                 return true;
             } else {
@@ -28,7 +28,7 @@ public abstract class AbstractShape implements Shape {
             }
         } else {
             // level++;
-            for (int i = 0; i <= children.length - 1; i++) {
+            for (int i = 0; i < children.length; i++) {
                 children[i].addLevel();
 
             }
@@ -40,7 +40,7 @@ public abstract class AbstractShape implements Shape {
     public boolean removeLevel() {
 
         // base case is if there are no grandchildren
-        if (children[0] != null && children[0].children[0] == null) {
+        if (children[0] != null) {
             if (children[0].children[0] == null) {
                 children[0] = null;
                 return true;
