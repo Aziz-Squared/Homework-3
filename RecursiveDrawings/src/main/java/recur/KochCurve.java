@@ -57,4 +57,10 @@ public class KochCurve extends AbstractShape {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public void update(int value) {
+		// TODO Auto-generated method stub
+
+	}
 }

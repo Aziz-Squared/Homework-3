@@ -10,6 +10,7 @@ public class SierpinskiTriangle extends AbstractShape {
 
 	private Polygon poly;
 	private Point p1, p2, p3;
+	private int triangleHeight = (int) Math.round(800 * Math.sqrt(3.0) / 2.0);
 	// Graphics graphics;
 
 	SierpinskiTriangle() {
@@ -42,13 +43,11 @@ public class SierpinskiTriangle extends AbstractShape {
 	}
 
 	public void draw(Graphics g) {
-		System.out.println("Triangle draw");
+
 		g.drawPolygon(poly);
-		System.out.println(children[0]);
-		if (children[0] != null){
-			System.out.println("Drawing children");
-			
-			for (int i = 0; i < children.length - 1; i++){
+		if (children[0] != null) {
+
+			for (int i = 0; i < children.length - 1; i++) {
 				children[i].draw(g);
 			}
 
@@ -57,43 +56,25 @@ public class SierpinskiTriangle extends AbstractShape {
 	}
 
 	public void createChildren() {
-		
+
 		Point p4 = new Point(midPoint(p1, p2));
 		Point p5 = new Point(midPoint(p2, p3));
 		Point p6 = new Point(midPoint(p1, p3));
 
-		// System.out.println("");
-
-		System.out.println("Creating child one");
 		children[0] = new SierpinskiTriangle(p1, p4, p6);
-		System.out.println("Create children [0]" + children[0]);
-		Polygon newPoly = new Polygon();
-		newPoly.addPoint(p1.x, p1.y);
-		newPoly.addPoint(p4.x, p4.y);
-		newPoly.addPoint(p6.x, p6.y);
-		// graphics.drawPolygon(newPoly);
-
-		System.out.println("Creating child two");
 		children[1] = new SierpinskiTriangle(p4, p2, p5);
-		newPoly = new Polygon();
-		newPoly.addPoint(p4.x, p4.y);
-		newPoly.addPoint(p2.x, p2.y);
-		newPoly.addPoint(p5.x, p5.y);
-		// graphics.drawPolygon(newPoly);
-
-		System.out.println("Creating child three");
 		children[2] = new SierpinskiTriangle(p6, p5, p3);
-		newPoly = new Polygon();
-		newPoly.addPoint(p6.x, p6.y);
-		newPoly.addPoint(p5.x, p5.y);
-		newPoly.addPoint(p3.x, p3.y);
-		// graphics.drawPolygon(newPoly);
-		System.out.println("");
 
 	}
 
 	public static Point midPoint(Point p1, Point p2) {
 		return new Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
+	}
+
+	@Override
+	public void update(int value) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
