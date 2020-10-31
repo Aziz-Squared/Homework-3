@@ -40,20 +40,22 @@ public abstract class AbstractShape implements Shape {
     public boolean removeLevel() {
 
         // base case is if there are no grandchildren
-        if (children[0] != null) {
-            if (children[0].children[0] == null) {
-                children[0] = null;
-                return true;
-            } else {
-                for (int i = 0; i < children.length; i++) {
-                    children[0].removeLevel();
-                }
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
+        public boolean removeLevel() {
+		if (children[0] != null) {
+			if (children[0].children[0] == null) {
+				for (int i = 0; i < children.length; i++) {
+					children[i] = null;
+				}
+				return true;
+			} 
+				for (int i = 0; i < children.length; i++) {
+					children[i].removeLevel();
+				}
+				return true;
+		} else {
+			return false;
+		}
+	}
 
     @Override
     public int countShapes() {
