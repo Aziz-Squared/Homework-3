@@ -5,34 +5,32 @@ import java.awt.Color;
 
 public abstract class AbstractShape implements Shape {
 
-    protected int level = 1;
+    protected static int level = 0;
     protected int maxLevel;
     protected AbstractShape[] children;
     protected Color color;
 
-    public AbstractShape(int amountOfChildren) {
+    public AbstractShape(int amountOfChildren, int mLevel) {
         children = new AbstractShape[amountOfChildren];
+        maxLevel = mLevel;
 
     }
 
+    // Adds a level to the shape
     public boolean addLevel() {
 
         if (children[0] == null) {
-
-            // createChildren();
-            // System.out.println("In add level " + children[0]);
-            // level++;
-            // System.out.println(level);
-            if (level != maxLevel) {
+            if (level <= maxLevel) {
                 createChildren();
                 return true;
             } else {
                 return false;
             }
         } else {
-
-            for (int i = 0; i < children.length - 1; i++) {
+            level++;
+            for (int i = 0; i <= children.length - 1; i++) {
                 children[i].addLevel();
+
             }
             return true;
         }
@@ -56,21 +54,6 @@ public abstract class AbstractShape implements Shape {
             return false;
         }
     }
-    // children = null;
-
-    // } else {
-    // // recursion
-    // // loop over the children
-    // // children[i].removeLevel()
-
-    // for (int i = 0; i <= children.length - 1; i++) {
-    // children[i].removeLevel();
-    // }
-
-    // }
-
-    // return false;
-    // }
 
     @Override
     public int countShapes() {

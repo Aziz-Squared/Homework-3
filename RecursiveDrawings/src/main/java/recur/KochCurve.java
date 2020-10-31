@@ -8,7 +8,7 @@ import java.awt.Graphics2D;
 public class KochCurve extends AbstractShape {
 
 	KochCurve(Graphics g, double height, double width) {
-		super(3);
+		super(3, 10);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(3));
 		g2.setColor(Color.GREEN);
