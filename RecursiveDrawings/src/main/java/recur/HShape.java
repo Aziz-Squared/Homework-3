@@ -24,15 +24,13 @@ public class HShape extends AbstractShape {
         rect5 = new Point((WIDTH / 3) * 2, (HEIGHT / 3) * 2);
         rect6 = new Point((WIDTH / 3) * 2, HEIGHT);
         
-        rect7 = new Point(WIDTH / 3, (HEIGHT / 3));
+        rect7 = new Point(WIDTH / 3, HEIGHT / 3);
 
     }
 
     public void createChildren() {
 
-        for (int i = 0; i < children.length; i++){
-            
-        }
+        
 
     }
 
@@ -41,19 +39,19 @@ public class HShape extends AbstractShape {
 
         g.setColor(Color.GREEN);
         // Top left rectangle
-        g.drawRect(rect1.x, rect1.x, rect1.y, rect1.y);
+        g.fillRect(rect1.x, rect1.x, rect1.y, rect1.y);
         // Middle left rectangle
-        g.drawRect(rect2.x, rect1.y, rect1.y, rect1.y);
+        g.fillRect(rect2.x, rect1.y, rect1.y, rect1.y);
         // Bottom left rectangle
-        g.drawRect(rect3.x, rect2.y, rect1.y, rect3.y);
+        g.fillRect(rect3.x, rect2.y, rect1.y, rect3.y);
         // Top right rectangle
-        g.drawRect(rect4.x, rect1.x, rect6.y, rect4.y);
+        g.fillRect(rect4.x, rect1.x, rect6.y, rect4.y);
         // Middle right rectangle
-        g.drawRect(rect5.x, rect4.y, rect6.y, rect4.y);
+        g.fillRect(rect5.x, rect4.y, rect6.y, rect4.y);
         // Bottom right rectangle
-        g.drawRect(rect6.x, rect5.y, rect6.y, rect6.y);
+        g.fillRect(rect6.x, rect5.y, rect6.y, rect6.y);
         // Center rectangle
-        g.fillRect(rect7.x, rect7.x, rect6.x, rect6.x);
+        g.fillRect(rect7.x, rect7.y, rect7.x, rect7.y);
 
         // System.out.println("x position: " + rect2.x);
         // System.out.println("y position: " + rect2.y);
@@ -63,11 +61,11 @@ public class HShape extends AbstractShape {
 
         // if (children[0] != null) {
 
-        //     for (int i = 0; i <= children.length - 1; i++) {
-        //         children[i].draw(g);
-        //     }
+            for (int i = 0; i <= children.length - 1; i++) {
+                children[i].draw(g);
+            }
 
-        // }
+        }
 
     }
 
