@@ -1,61 +1,64 @@
 package recur;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 public class KochCurve extends AbstractShape {
+	
+	int ax, ay, bx, by;
+	
+	int height, width;
 
-	KochCurve(Graphics g, double height, double width) {
-		super(3, 10);
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setStroke(new BasicStroke(3));
-		g2.setColor(Color.GREEN);
-		drawKochCurve(g2, level, 10, height / 2, width - 10, height / 2 + 1);
-
+	KochCurve(int height, int width) {
+		super(4, 10);
+		
+		this.height = height;
+		this.width = width;
+		
+		this.ax = 10;
+		this.ay = height/2;
+	 	this.bx = width-30;
+		this.by = height/2+1;
+	}
+	
+	KochCurve(int  ax, int ay, int bx, int by) {
+		super(4, 10);
+		
+		this.ax = ax;
+		this.ay = ay;
+		this.bx  = bx;
+		this.by = by;
 	}
 
 	public void draw(Graphics g) {
-
-	}
-
-	/**
-	 * Draw a Koch curve with a given level of recursion from the point A=(ax,ay) to
-	 * the point B=(bx,by). The level should be greater than or equal to 1. A curve
-	 * of level 1 is just a straight line.
-	 */
-	void drawKochCurve(Graphics g, int level, double ax, double ay, double bx, double by) {
-		if (level <= 1) {
-			g.drawLine((int) ax, (int) ay, (int) bx, (int) by);
-		} else {
-
-			double sqrt3 = Math.sqrt(3);
-
-			double cx = (2 * ax + bx) / 3;
-			double cy = (2 * ay + by) / 3;
-
-			double ex = (ax + 2 * bx) / 3;
-			double ey = (ay + 2 * by) / 3;
-
-			double hx = (ax + bx) / 2;
-			double hy = (ay + by) / 2;
-
-			double dx = hx + sqrt3 * (ey - hy);
-			double dy = hy - sqrt3 * (ex - hx);
-
-			drawKochCurve(g, level - 1, ax, ay, cx, cy); // Draw the four Koch curves
-			drawKochCurve(g, level - 1, cx, cy, dx, dy);
-			drawKochCurve(g, level - 1, dx, dy, ex, ey);
-			drawKochCurve(g, level - 1, ex, ey, bx, by);
-
+		g.drawLine(ax,ay,bx,by);
+		if (children[0] != null) {
+			for (int i = 0; i <= children.length - 1; i++) {
+				children[i].draw(g);
+			}
 		}
 	}
-
+	
 	@Override
 	public void createChildren() {
-		// TODO Auto-generated method stub
+		double sqrt3 = Math.sqrt(3);
 
+		double cx = (2 * ax + bx) / 3;
+		double cy = (2 * ay + by) / 3;
+
+		double ex = (ax + 2 * bx) / 3;
+		double ey = (ay + 2 * by) / 3;
+
+		double hx = (ax + bx) / 2;
+		double hy = (ay + by) / 2;
+
+		double dx = hx + sqrt3 * (ey - hy);
+		double dy = hy - sqrt3 * (ex - hx);
+		
+		children[0] = new KochCurve(ax, ay, (int)cx, (int)cy);
+		children[1] = new KochCurve((int)cx, (int)cy, (int)dx, (int)dy);
+		children[2] = new KochCurve((int)dx, (int)dy, (int)ex, (int)ey);
+		children[3] = new KochCurve((int)ex, (int)ey, bx, by);
 	}
 
 	@Override
