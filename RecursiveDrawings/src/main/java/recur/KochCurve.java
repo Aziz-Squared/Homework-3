@@ -60,6 +60,20 @@ public class KochCurve extends AbstractShape {
 		children[2] = new KochCurve((int)dx, (int)dy, (int)ex, (int)ey);
 		children[3] = new KochCurve((int)ex, (int)ey, bx, by);
 	}
+	
+	@Override
+	public int countShapes() {
+		int count = 0;
+		if (children[0] == null) {
+			return 1;
+		}
+		else {
+			for (int i = 0; i < children.length; i++) {
+				count = children.length * children[i].countShapes();			
+			}
+		} return count;
+	}
+	
 
 	@Override
 	public void update(int value) {
