@@ -28,7 +28,7 @@ public abstract class AbstractShape implements Shape {
                 return false;
             }
         } else {
-            for (int i = 0; i <= children.length - 1; i++) {
+            for (int i = 0; i < children.length; i++) {
                 children[i].addLevel();
             }
             return true;
@@ -36,22 +36,19 @@ public abstract class AbstractShape implements Shape {
     }
 
     @Override
+    // base case is if there are no grandchildren
     public boolean removeLevel() {
-
-        // base case is if there are no grandchildren
-        if (children[0] != null && children[0].children[0] == null) {
+        if (children[0] != null) {
             if (children[0].children[0] == null) {
-                for (int i = 0; i <= children.length - 1;) {
+                for (int i = 0; i < children.length; i++) {
                     children[i] = null;
-                    return true;
-                }
-                return true;
-            } else {
-                for (int i = 0; i <= children.length - 1; i++) {
-                    children[i].removeLevel();
                 }
                 return true;
             }
+            for (int i = 0; i < children.length; i++) {
+                children[i].removeLevel();
+            }
+            return true;
         } else {
             return false;
         }
