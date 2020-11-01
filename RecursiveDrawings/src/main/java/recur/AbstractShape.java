@@ -27,7 +27,6 @@ public abstract class AbstractShape implements Shape {
                 return false;
             }
         } else {
-            // level++;
             for (int i = 0; i < children.length; i++) {
                 children[i].addLevel();
             }
