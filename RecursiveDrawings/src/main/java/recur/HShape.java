@@ -8,7 +8,8 @@ import java.awt.Color;
 public class HShape extends AbstractShape {
 
     private int HEIGHT, WIDTH;
-    private Point rect1, rect2, rect3, rect4, rect5, rect6, rect7;
+    private Point rect1Start, rect2Start, rect3Start, rect4Start, rect5Start, rect6Start, rect7Start;
+    private Point rect1End, rect2End, rect3End, rect4End, rect5End, rect6End, rect7End; 
 
     public HShape(int height, int width) {
         super(7, 5);
@@ -16,21 +17,71 @@ public class HShape extends AbstractShape {
         HEIGHT = height;
         WIDTH = width;
 
-        rect1 = new Point(WIDTH - WIDTH, HEIGHT / 3);
-        rect2 = new Point(WIDTH - WIDTH, (HEIGHT / 3) * 2);
-        rect3 = new Point(WIDTH - WIDTH, HEIGHT);
+        // Starting points of all the rectangles
+        rect1Start = new Point(WIDTH - WIDTH, HEIGHT - HEIGHT);
+        rect2Start = new Point(WIDTH - WIDTH, HEIGHT / 3);
+        rect3Start = new Point(WIDTH - WIDTH, (HEIGHT / 3) * 2);
 
-        rect4 = new Point((WIDTH / 3) * 2, HEIGHT / 3);
-        rect5 = new Point((WIDTH / 3) * 2, (HEIGHT / 3) * 2);
-        rect6 = new Point((WIDTH / 3) * 2, HEIGHT);
+        rect4Start = new Point((WIDTH / 3) * 2, HEIGHT - HEIGHT);
+        rect5Start = new Point((WIDTH / 3) * 2, HEIGHT / 3);
+        rect6Start = new Point((WIDTH / 3) * 2, (HEIGHT / 3) * 2);
+
+        rect7Start = new Point(WIDTH / 3, HEIGHT / 3);
+
+        // Ending points of all the rectangles
+        rect1End = new Point(WIDTH / 3, HEIGHT / 3);
+        rect2End = new Point(WIDTH / 3, HEIGHT / 3);
+        rect3End = new Point(WIDTH / 3, HEIGHT);
+
+        rect4End = new Point((WIDTH / 3) * 2, HEIGHT / 3);
+        rect5End = new Point((WIDTH / 3) * 2, (HEIGHT / 3) * 2);
+        rect6End = new Point((WIDTH / 3) * 2, HEIGHT);
+
+        rect7End = new Point(rect3End.x, rect6Start.x / 2);
+
+
+    }
+
+    public HShape(Point newLimits1, Point newLimits2){
+        super(7, 5);
+
+        WIDTH = newLimits2.x - newLimits1.x;
+        HEIGHT = newLimits2.y - newLimits1.y;
+
+        // Starting points of all the rectangles
+        rect1Start = new Point(WIDTH - WIDTH, HEIGHT - HEIGHT);
+        rect2Start = new Point(WIDTH - WIDTH, HEIGHT / 3);
+        rect3Start = new Point(WIDTH - WIDTH, (HEIGHT / 3) * 2);
+
+        rect4Start = new Point((WIDTH / 3) * 2, HEIGHT - HEIGHT);
+        rect5Start = new Point((WIDTH / 3) * 2, HEIGHT / 3);
+        rect6Start = new Point((WIDTH / 3) * 2, (HEIGHT / 3) * 2);
+
+        rect7Start = new Point(WIDTH / 3, HEIGHT / 3);
+
+        // Ending points of all the rectangles
+        rect1End = new Point(WIDTH / 3, HEIGHT / 3);
+        rect2End = new Point(WIDTH / 3, HEIGHT / 3);
+        rect3End = new Point(WIDTH / 3, HEIGHT);
+
+        rect4End = new Point((WIDTH / 3) * 2, HEIGHT / 3);
+        rect5End = new Point((WIDTH / 3) * 2, (HEIGHT / 3) * 2);
+        rect6End = new Point((WIDTH / 3) * 2, HEIGHT);
+
+        rect7End = new Point(rect3End.x, rect6Start.x / 2);
         
-        rect7 = new Point(WIDTH / 3, HEIGHT / 3);
 
     }
 
     public void createChildren() {
-
         
+        children[0] = new HShape(rect1Start, rect1End);
+        children[2] = new HShape(rect2Start, rect2End);
+        children[3] = new HShape(rect3Start, rect3End);
+        children[4] = new HShape(rect4Start, rect4End);
+        children[5] = new HShape(rect5Start, rect5End);
+        children[6] = new HShape(rect6Start, rect6End);
+        System.out.println("adding h shape");
 
     }
 
@@ -39,34 +90,27 @@ public class HShape extends AbstractShape {
 
         g.setColor(Color.GREEN);
         // Top left rectangle
-        g.fillRect(rect1.x, rect1.x, rect1.y, rect1.y);
+        g.drawRect(rect1Start.x, rect1Start.y, rect1End.x, rect1End.y);
         // Middle left rectangle
-        g.fillRect(rect2.x, rect1.y, rect1.y, rect1.y);
+        g.drawRect(rect2Start.x, rect2Start.y, rect2End.x, rect2End.y);
         // Bottom left rectangle
-        g.fillRect(rect3.x, rect2.y, rect1.y, rect3.y);
+        g.drawRect(rect3Start.x, rect3Start.y, rect3End.x, rect3End.y);
         // Top right rectangle
-        g.fillRect(rect4.x, rect1.x, rect6.y, rect4.y);
+        g.drawRect(rect4Start.x, rect4Start.y, rect4End.x, rect4End.y);
         // Middle right rectangle
-        g.fillRect(rect5.x, rect4.y, rect6.y, rect4.y);
+        g.drawRect(rect5Start.x, rect5Start.y, rect5End.x, rect5End.y);
         // Bottom right rectangle
-        g.fillRect(rect6.x, rect5.y, rect6.y, rect6.y);
+        g.drawRect(rect6Start.x, rect6Start.y, rect6End.x, rect6End.y);
         // Center rectangle
-        g.fillRect(rect7.x, rect7.y, rect7.x, rect7.y);
+        g.fillRect(rect7Start.x, rect7Start.y, rect7End.x, rect7End.y);
 
-        // System.out.println("x position: " + rect2.x);
-        // System.out.println("y position: " + rect2.y);
-        // System.out.println("height: " + HEIGHT + " width: " + WIDTH);
+        if (children[0] != null) {
 
-        
-
-        // if (children[0] != null) {
-
-            for (int i = 0; i <= children.length - 1; i++) {
+            for (int i = 0; i < children.length; i++) {
                 children[i].draw(g);
             }
 
         }
-
     }
 
     public void update(int value) {
