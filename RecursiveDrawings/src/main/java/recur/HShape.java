@@ -76,11 +76,12 @@ public class HShape extends AbstractShape {
     public void createChildren() {
         
         children[0] = new HShape(rect1Start, rect1End);
-        children[2] = new HShape(rect2Start, rect2End);
-        children[3] = new HShape(rect3Start, rect3End);
-        children[4] = new HShape(rect4Start, rect4End);
-        children[5] = new HShape(rect5Start, rect5End);
-        children[6] = new HShape(rect6Start, rect6End);
+        children[1] = new HShape(rect2Start, rect2End);
+        children[2] = new HShape(rect3Start, rect3End);
+        children[3] = new HShape(rect4Start, rect4End);
+        children[4] = new HShape(rect5Start, rect5End);
+        children[5] = new HShape(rect6Start, rect6End);
+        children[6] = new HShape(rect7Start, rect7End);
         System.out.println("adding h shape");
 
     }
@@ -102,11 +103,11 @@ public class HShape extends AbstractShape {
         // Bottom right rectangle
         g.drawRect(rect6Start.x, rect6Start.y, rect6End.x, rect6End.y);
         // Center rectangle
-        g.fillRect(rect7Start.x, rect7Start.y, rect7End.x, rect7End.y);
+        g.drawRect(rect7Start.x, rect7Start.y, rect7End.x, rect7End.y);
 
         if (children[0] != null) {
 
-            for (int i = 0; i < children.length; i++) {
+            for (int i = 0; i <= children.length - 1; i++) {
                 children[i].draw(g);
             }
 
