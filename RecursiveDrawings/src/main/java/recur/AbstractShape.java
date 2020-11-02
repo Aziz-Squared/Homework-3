@@ -25,10 +25,9 @@ public abstract class AbstractShape implements Shape {
             createChildren();
             return true;
         } else if (level <= maxLevel) {
-               return false;
-            } 
+            return false;
         } else {
-        level++;
+            level++;
             for (int i = 0; i < children.length; i++) {
                 children[i].addLevel();
             }
@@ -52,10 +51,11 @@ public abstract class AbstractShape implements Shape {
             
             level--;
             return true;
-        } else {
-            return false;
         }
+    } else {
+        return false;
     }
+}
 
     @Override
     public int countShapes() {
