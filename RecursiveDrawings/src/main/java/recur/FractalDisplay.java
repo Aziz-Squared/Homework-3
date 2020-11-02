@@ -179,7 +179,7 @@ public class FractalDisplay extends JPanel implements MouseListener, ActionListe
 				// TODO
 				// Call your MyShape constructor here
 				// Replace shape = null with shape = new MyShape(...))
-				shape = null;
+				shape = new KochCurve(HEIGHT, WIDTH);
 				break;
 			}
 		} else if (e.getSource() == addLevel) {
