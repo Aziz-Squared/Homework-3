@@ -67,7 +67,7 @@ public class HShape extends AbstractShape {
 
         }
 
-    }
+    
 
     public void update(int value) {
 
