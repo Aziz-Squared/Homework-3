@@ -13,6 +13,7 @@ public abstract class AbstractShape implements Shape {
     public AbstractShape(int amountOfChildren, int mLevel) {
         children = new AbstractShape[amountOfChildren];
         maxLevel = mLevel;
+        level = 1;
 
     }
 
@@ -20,14 +21,14 @@ public abstract class AbstractShape implements Shape {
     public boolean addLevel() {
 
         if (children[0] == null) {
-            System.out.println("Current level: " + level);
-            if (level <= maxLevel) {
-                createChildren();
-                return true;
-            } else {
-                return false;
-            }
+            level++;
+            createChildren();
+            return true;
+        } else if (level <= maxLevel) {
+               return false;
+            } 
         } else {
+        level++;
             for (int i = 0; i < children.length; i++) {
                 children[i].addLevel();
             }
