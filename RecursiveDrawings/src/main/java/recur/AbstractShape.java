@@ -43,19 +43,17 @@ public abstract class AbstractShape implements Shape {
                 for (int i = 0; i < children.length; i++) {
                     children[i] = null;
                 }
-                level--;
                 return true;
             }
             for (int i = 0; i < children.length; i++) {
                 children[i].removeLevel();
-            
-            level--;
+                level--;
+            }
             return true;
+        } else {
+            return false;
         }
-    } else {
-        return false;
     }
-}
 
     @Override
     public int countShapes() {
