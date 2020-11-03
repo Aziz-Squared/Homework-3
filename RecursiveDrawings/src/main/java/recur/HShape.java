@@ -1,7 +1,6 @@
 package recur;
 
 import java.awt.Graphics;
-import java.awt.Polygon;
 import java.awt.Point;
 import java.awt.Color;
 
@@ -34,29 +33,29 @@ public class HShape extends AbstractShape {
     @Override
     public void draw(Graphics g) {
 
-        // Loops through the points array. Even index is starting points odd index is ending points
-        for (int i = 1; i <= 17; i += 2) {
-            // Checks to see if the starting points are the two white squares
-            if ((i - 1) == 6 || (i - 1) == 10) {
-                g.setColor(Color.WHITE);
-                g.fillRect(points[i - 1].x, points[i - 1].y, points[i].x, points[i].y);
-            } else {
-                g.setColor(Color.GREEN);
-                g.fillRect(points[i - 1].x, points[i - 1].y, points[i].x, points[i].y);
-
+        // Loops through the points array. Even index is starting points odd index is
+        // ending points
+        if (children[0] == null) {
+            
+            for (int i = 1; i <= 17; i += 2) {
+                // Checks to see if the starting points are the two white squares
+                if ((i - 1) == 6 || (i - 1) == 10) {
+                    g.setColor(Color.WHITE);
+                    g.fillRect(points[i - 1].x, points[i - 1].y, points[i].x, points[i].y);
+                } else {
+                    g.setColor(Color.GREEN);
+                    g.fillRect(points[i - 1].x, points[i - 1].y, points[i].x, points[i].y);
+    
+                }
+                System.out.println("Starting point: " + points[i - 1] + " " + (i - 1));
+                System.out.println("Ending point: " + points[i] + " " + i);
+    
             }
-            System.out.println("Starting point: " + points[i - 1] + " " + (i - 1));
-            System.out.println("Ending point: " + points[i] + " " + i);
 
-        }
-
-        if (children[0] != null) {
-
+        } else {
             for (int i = 0; i <= children.length - 1; i++) {
                 children[i].draw(g);
             }
-            g.setColor(Color.WHITE);
-            
         }
 
     }
@@ -72,14 +71,14 @@ public class HShape extends AbstractShape {
         int heightThird = HEIGHT / 3;
 
         return new Point[] { new Point(widthZero, heightZero), new Point(widthThird, heightThird), // Rectangle 1
-                new Point(widthZero, heightThird), new Point(widthThird, heightThird * 2),          // Rectangle 2
-                new Point(widthZero, heightThird * 2), new Point(widthThird, HEIGHT),               // Rectangle 3
-                new Point(widthThird, heightZero), new Point(widthThird * 2, heightThird),          // Rectangle 4
-                new Point(widthThird, heightThird), new Point(widthThird * 2, heightThird * 2),     // Rectangle 5
-                new Point(widthThird, heightThird * 2), new Point(widthThird * 2, HEIGHT),          // Rectangle 6
-                new Point(widthThird * 2, heightZero), new Point(WIDTH, heightThird),               // Rectangle 7
-                new Point(widthThird * 2, heightThird), new Point(WIDTH, heightThird * 2),          // Rectangle 8
-                new Point(widthThird * 2, heightThird * 2), new Point(WIDTH, HEIGHT) };             // Rectangle 9
+                new Point(widthZero, heightThird), new Point(widthThird, heightThird * 2), // Rectangle 2
+                new Point(widthZero, heightThird * 2), new Point(widthThird, HEIGHT), // Rectangle 3
+                new Point(widthThird, heightZero), new Point(widthThird * 2, heightThird), // Rectangle 4
+                new Point(widthThird, heightThird), new Point(widthThird * 2, heightThird * 2), // Rectangle 5
+                new Point(widthThird, heightThird * 2), new Point(widthThird * 2, HEIGHT), // Rectangle 6
+                new Point(widthThird * 2, heightZero), new Point(WIDTH, heightThird), // Rectangle 7
+                new Point(widthThird * 2, heightThird), new Point(WIDTH, heightThird * 2), // Rectangle 8
+                new Point(widthThird * 2, heightThird * 2), new Point(WIDTH, HEIGHT) }; // Rectangle 9
 
     }
 
