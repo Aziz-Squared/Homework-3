@@ -18,48 +18,47 @@ public class HShape extends AbstractShape {
 
     }
 
-    public HShape(Point start, Point end){
-        super(9,5);
+    public HShape(Point start, Point end) {
+        super(9, 5);
         points = newRectangles(start, end);
     }
 
     public void createChildren() {
 
-        // int newLevel = level + 1;
-        // int childWidth = (int) Math.round(WIDTH / 3.0);
-        // int childHeight = (int) Math.round(HEIGHT / 3.0);
-        // int childNumber = 0;
+        int childWidth = (int) Math.round(WIDTH / 3.0);
+        int childHeight = (int) Math.round(HEIGHT / 3.0);
 
-        // for (int row = 0; row < 3; row++) {
-        // for (int col = 0; col < 3; col++) {
-        // if (col == 1 && row != 1) {
-        // continue;
-        // }
-        // // make child
-        // for (int i = 0; i <= children.length - 1; i++){
-        // for (int j = 1; j <= 17; j +=2){
-        // children[i] = new HShape(childHeight * row + points[j - 1].y, childWidth *
-        // col + points[j - 1].x);
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (col == 1 && row != 1) {
+                    continue;
+                }
+                // make child
+                for (int i = 0; i <= children.length - 1; i++) {
+                    for (int j = 1; j <= 17; j += 2) {
+                        children[i] = new HShape(
+                            new Point(childWidth * col + points[j - 1].x, childHeight * row + points[j - 1].y),
+                            new Point(childWidth * col + points[j].x, childHeight * row + points[j].y) );
 
-        // }
+                    }
 
-        // }
-        // }
-        // }
-
-        for (int i = 0; i <= children.length - 1; i++) {
-            for (int j = 1; j <= 17; j += 2) {
-                children[i] = new HShape(points[j - 1], points[j]);
-
+                }
             }
         }
+
+        // for (int i = 0; i <= children.length - 1; i++) {
+        // for (int j = 1; j <= 17; j += 2) {
+        // children[i] = new HShape(points[j - 1], points[j]);
+
+        // }
+        // }
 
     }
 
     @Override
     public void draw(Graphics g) {
 
-        // Loops through the points array. 
+        // Loops through the points array.
         // Even index is starting points odd index is ending points
         if (children[0] == null) {
 
