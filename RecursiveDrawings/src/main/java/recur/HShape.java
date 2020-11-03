@@ -18,6 +18,11 @@ public class HShape extends AbstractShape {
 
     }
 
+    public HShape(Point start, Point end){
+        super(9,5);
+        points = newRectangles(start, end);
+    }
+
     public void createChildren() {
 
         // int newLevel = level + 1;
@@ -44,7 +49,7 @@ public class HShape extends AbstractShape {
 
         for (int i = 0; i <= children.length - 1; i++) {
             for (int j = 1; j <= 17; j += 2) {
-                children[i] = new HShape(points[j - 1].y, points[j - 1].x);
+                children[i] = new HShape(points[j - 1], points[j]);
 
             }
         }
@@ -54,8 +59,8 @@ public class HShape extends AbstractShape {
     @Override
     public void draw(Graphics g) {
 
-        // Loops through the points array. Even index is starting points odd index is
-        // ending points
+        // Loops through the points array. 
+        // Even index is starting points odd index is ending points
         if (children[0] == null) {
 
             for (int i = 1; i <= 17; i += 2) {
