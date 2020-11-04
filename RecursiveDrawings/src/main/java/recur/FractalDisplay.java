@@ -1,4 +1,5 @@
 package recur;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -22,258 +23,264 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * Construct a window to display the fractal shapes. This class is almost
- * complete. Add your own code only in the places marked with the comment TODO
- * 
- */
+* Construct a window to display the fractal shapes. This class is almost
+* complete. Add your own code only in the places marked with the comment TODO
+*
+*/
 
 public class FractalDisplay extends JPanel implements MouseListener, ActionListener, ChangeListener {
 
-	// Width of the inner panel
-	public static final int WIDTH = 800;
+   // Width of the inner panel
+   public static final int WIDTH = 800;
 
-	// Height of the inner panel
-	public static final int HEIGHT = 800;
+   // Height of the inner panel
+   public static final int HEIGHT = 800;
 
-	// Possible shapes
-	private int which;
-	public static final int SIERPINSKI_TRIANGLE = 0;
-	public static final int H_SHAPE = 1;
-	public static final int MY_SHAPE = 2;
+   // Possible shapes
+   private int which;
+   public static final int SIERPINSKI_TRIANGLE = 0;
+   public static final int H_SHAPE = 1;
+   public static final int MY_SHAPE = 2;
 
-	private JFrame frame;
+   private JFrame frame;
 
-	// Other elements in the window
-	// Radio buttons (with their titles)
-	private String[] titles;
-	private JRadioButton[] radioButtons;
+   // Other elements in the window
+   // Radio buttons (with their titles)
+   private String[] titles;
+   private JRadioButton[] radioButtons;
 
-	// The button to add/remove levels
-	private JButton addLevel, removeLevel;
+   // The button to add/remove levels
+   private JButton addLevel, removeLevel;
 
-	// Slider to change the display (extra-credit feature)
-	private JSlider slider;
+   // Slider to change the display (extra-credit feature)
+   private JSlider slider;
 
-	// Current shape
-	private Shape shape;
+   // Current shape
+   private Shape shape;
 
-	// Use a popup menu to display information
-	// the total number of shapes in the current shape
-	// -> triggered by a right click of the the mouse.
-	private JPopupMenu popup;
-	private JLabel popupLabel;
+   // Use a popup menu to display information
+   // the total number of shapes in the current shape
+   // -> triggered by a right click of the the mouse.
+   private JPopupMenu popup;
+   private JLabel popupLabel;
+   private JLabel label;
 
-	/**
-	 * Constructs a FractalDisplay to display fractal shapes
-	 */
-	public FractalDisplay() {
-		// Use a windows look and feel (if available)
-		try {
-			UIManager.LookAndFeelInfo[] lfinfo = UIManager.getInstalledLookAndFeels();
-			UIManager.setLookAndFeel(lfinfo[4].getClassName());
-		} catch (Exception e) {/* ignore any problem */
-		}
 
-		// Radio buttons
-		titles = new String[] { "Sierpinski Triangle", "HShape", "My shape" };
-		radioButtons = new JRadioButton[titles.length];
-		// Only one radio button can be selected at a time
-		ButtonGroup buttonGroup = new ButtonGroup();
-		for (int i = 0; i < radioButtons.length; i++) {
-			radioButtons[i] = new JRadioButton(titles[i]);
-			buttonGroup.add(radioButtons[i]);
-			radioButtons[i].addActionListener(this);
-		}
+   /**
+   * Constructs a FractalDisplay to display fractal shapes
+   */
+   public FractalDisplay() {
+       // Use a windows look and feel (if available)
+       try {
+           UIManager.LookAndFeelInfo[] lfinfo = UIManager.getInstalledLookAndFeels();
+           UIManager.setLookAndFeel(lfinfo[4].getClassName());
+       } catch (Exception e) {/* ignore any problem */
+       }
 
-		// Button to add or remove levels to the shape
-		addLevel = new JButton("Add level");
-		addLevel.addActionListener(this);
-		removeLevel = new JButton("Remove level");
-		removeLevel.addActionListener(this);
+       // Radio buttons
+       titles = new String[] { "Sierpinski Triangle", "HShape", "My shape" };
+       radioButtons = new JRadioButton[titles.length];
+       // Only one radio button can be selected at a time
+       ButtonGroup buttonGroup = new ButtonGroup();
+       for (int i = 0; i < radioButtons.length; i++) {
+           radioButtons[i] = new JRadioButton(titles[i]);
+           buttonGroup.add(radioButtons[i]);
+           radioButtons[i].addActionListener(this);
+       }
 
-		// Slider to change the shape
-		slider = new JSlider(0, 100, 50);
-		slider.addChangeListener(this);
+       // Button to add or remove levels to the shape
+       addLevel = new JButton("Add level");
+       addLevel.addActionListener(this);
+       removeLevel = new JButton("Remove level");
+       removeLevel.addActionListener(this);
 
-		// Place the components in the frame
-		JPanel contentPane = new JPanel();
-		contentPane.setLayout(new BorderLayout());
-		// at the bottom (SOUTH)
-		JPanel southPanel = new JPanel(new GridLayout(3, 1));
-		JPanel southPanelFirstRow = new JPanel();
-		for (int i = 0; i < radioButtons.length; i++)
-			southPanelFirstRow.add(radioButtons[i]);
-		southPanel.add(southPanelFirstRow);
-		JPanel southPanelSecondRow = new JPanel();
-		southPanelSecondRow.add(addLevel);
-		southPanelSecondRow.add(removeLevel);
-		southPanel.add(southPanelSecondRow);
-		contentPane.add(southPanel, BorderLayout.SOUTH);
-		JPanel southPanelThirdRow = new JPanel();
-		southPanelThirdRow.add(slider);
-		southPanel.add(southPanelThirdRow);
+       // Slider to change the shape
+       slider = new JSlider(0, 100, 50);
+       slider.addChangeListener(this);
 
-		setBackground(Color.WHITE);
-		contentPane.add(this, BorderLayout.CENTER);
+       // Place the components in the frame
+       JPanel contentPane = new JPanel();
+       contentPane.setLayout(new BorderLayout());
+       // at the bottom (SOUTH)
+       JPanel southPanel = new JPanel(new GridLayout(3, 1));
+       JPanel southPanelFirstRow = new JPanel();
+       for (int i = 0; i < radioButtons.length; i++)
+           southPanelFirstRow.add(radioButtons[i]);
+       southPanel.add(southPanelFirstRow);
+       JPanel southPanelSecondRow = new JPanel();
+       southPanelSecondRow.add(addLevel);
+       southPanelSecondRow.add(removeLevel);
+       southPanel.add(southPanelSecondRow);
+       contentPane.add(southPanel, BorderLayout.SOUTH);
+       JPanel southPanelThirdRow = new JPanel();
+       southPanelThirdRow.add(slider);
+       southPanel.add(southPanelThirdRow);
 
-		// Get ready to listen to mouse clicks
-		addMouseListener(this);
+       setBackground(Color.WHITE);
+       contentPane.add(this, BorderLayout.CENTER);
+      
+       label = new JLabel("Number of shapes: ");
+       label.setFont(new Font("Courier", Font.BOLD, 32));
+       JPanel northPanel = new JPanel();
+       northPanel.setBackground(Color.WHITE);
+       northPanel.add(label);
+       contentPane.add(northPanel, BorderLayout.NORTH);
 
-		// Put everything in a frame
-		frame = new JFrame("Recursive graphics");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setContentPane(contentPane);
-		// Show it
-		frame.setSize(WIDTH, HEIGHT);
-		frame.setVisible(true);
-		// Resize it with the actual size
-		Insets insets = frame.getInsets();
-		int width = WIDTH + insets.left + insets.right;
-		int height = HEIGHT + insets.top + insets.bottom + (int) (southPanel.getPreferredSize().getHeight());
-		frame.setSize(width, height);
-		frame.setResizable(false);
-		frame.setVisible(true);
+       // Get ready to listen to mouse clicks
+       addMouseListener(this);
 
-		// popup menu
-		popup = new JPopupMenu();
-		popupLabel = new JLabel("", SwingConstants.CENTER);
-		popupLabel.setFont(new Font("Courier", Font.BOLD, 32));
-		popup.add(popupLabel);
-	}
+       // Put everything in a frame
+       frame = new JFrame("Recursive graphics");
+       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       frame.setContentPane(contentPane);
+       // Show it
+       frame.setSize(WIDTH, HEIGHT);
+       frame.setVisible(true);
+       // Resize it with the actual size
+       Insets insets = frame.getInsets();
+       int width = WIDTH + insets.left + insets.right;
+       int height = HEIGHT + insets.top + insets.bottom + (int) (southPanel.getPreferredSize().getHeight()) + (int) (northPanel.getPreferredSize().getHeight());
+       frame.setSize(width, height);
+       frame.setResizable(false);
+       frame.setVisible(true);
 
-	/**
-	 * Handles the button clicks
-	 * 
-	 * @param e the ActionEvent generated by the click
-	 */
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().getClass() == JRadioButton.class) {
-			for (int i = 0; i < radioButtons.length; i++) {
-				if (e.getSource() == radioButtons[i]) {
-					which = i;
-					// reset the slider to its default value
-					slider.setValue(50);
-					break;
-				}
-			}
-			switch (which) {
-			case SIERPINSKI_TRIANGLE:
-				// TODO
-				// Call your SierpinskiTriangle constructor here
-				// replace shape = null with shape = new SierpinskiTriangle(...)
-				shape = new SierpinskiTriangle();
-				break;
-			case H_SHAPE:
-				// TODO
-				// Call your HShape constructor here
-				// Replace shape = null with shape = new HShape(...))
-				shape = new HShape(HEIGHT, WIDTH);
-				break;
-			case MY_SHAPE:
-				// TODO
-				// Call your MyShape constructor here
-				// Replace shape = null with shape = new MyShape(...))
-				shape = new KochCurve(HEIGHT, WIDTH);
-				break;
-			}
-		} else if (e.getSource() == addLevel) {
-			// Don't do anything if there is no display
-			if (shape != null) {
-				boolean success = shape.addLevel();
-				if (!success) {
-					JOptionPane.showMessageDialog(this, "Can't add another level", "Message",
-					        JOptionPane.WARNING_MESSAGE);
-				}
-			}
-		} else if (e.getSource() == removeLevel) {
-			// Don't do anything if there is no display
-			if (shape != null) {
-				boolean success = shape.removeLevel();
-				if (!success) {
-					JOptionPane.showMessageDialog(this, "Can't remove another level", "Message",
-					        JOptionPane.WARNING_MESSAGE);
-				}
-			}
-		} else {
-			// unknown source
-			return;
-		}
+       // popup menu
+       popup = new JPopupMenu();
+       popupLabel = new JLabel("", SwingConstants.CENTER);
+       popupLabel.setFont(new Font("Courier", Font.BOLD, 32));
+       popup.add(popupLabel);
+      
+      
 
-		// display the new drawing
-		repaint();
-	}
+   }
 
-	/**
-	 * Paints the shape
-	 */
-	public void paintComponent(Graphics gfx) {
-		super.paintComponent(gfx);
-		// If there is nothing to display, stop here
-		if (shape != null) {
-			// Use some graphics2D features (smooth edges)
-			Graphics2D g = (Graphics2D) gfx;
-			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			shape.draw(g);
-		}
-	}
+   /**
+   * Handles the button clicks
+   *
+   * @param e the ActionEvent generated by the click
+   */
+   public void actionPerformed(ActionEvent e) {
+       if (e.getSource().getClass() == JRadioButton.class) {
+           for (int i = 0; i < radioButtons.length; i++) {
+               if (e.getSource() == radioButtons[i]) {
+                   which = i;
+                   // reset the slider to its default value
+                   slider.setValue(50);
+                   break;
+               }
+           }
+           label.setText("Number of Shapes = ");
+           switch (which) {
+           case SIERPINSKI_TRIANGLE:
+               shape = new SierpinskiTriangle(WIDTH, HEIGHT);
+               shape.update(slider.getValue());
+               break;
+           case H_SHAPE:
+               shape = new HShape(WIDTH, HEIGHT);
+               break;
+           case MY_SHAPE:
+               shape = new KochCurve(WIDTH, HEIGHT);
+               break;
+           }
+       } else if (e.getSource() == addLevel) {
+           // Don't do anything if there is no display
+           if (shape != null) {
+               boolean success = shape.addLevel();
+               label.setText("Number of Shapes = " + AbstractShape.getCount());
+               if (!success) {
+                   JOptionPane.showMessageDialog(this, "Can't add another level", "Message",
+                           JOptionPane.WARNING_MESSAGE);
+               }
+           }
+       } else if (e.getSource() == removeLevel) {
+           // Don't do anything if there is no display
+           if (shape != null) {
+               boolean success = shape.removeLevel();
+               label.setText("Number of Shapes = " + AbstractShape.getCount());
+               if (!success) {
+                   JOptionPane.showMessageDialog(this, "Can't remove another level", "Message",
+                           JOptionPane.WARNING_MESSAGE);
+               }
+           }
+       } else {
+           // unknown source
+           return;
+       }
 
-	/**
-	 * Different platforms might have different ways to trigger a popup menu: check
-	 * all possibilities
-	 */
-	public void mousePressed(MouseEvent e) {
-		checkPopup(e);
-	}
+       // display the new drawing
+       repaint();
+   }
 
-	public void mouseClicked(MouseEvent e) {
-		checkPopup(e);
-	}
+   /**
+   * Paints the shape
+   */
+   public void paintComponent(Graphics gfx) {
+       super.paintComponent(gfx);
+       // If there is nothing to display, stop here
+       if (shape != null) {
+           // Use some graphics2D features (smooth edges)
+           Graphics2D g = (Graphics2D) gfx;
+           g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+           shape.draw(g);
+       }
+   }
 
-	public void mouseReleased(MouseEvent e) {
-		checkPopup(e);
-	}
+   /**
+   * Different platforms might have different ways to trigger a popup menu: check
+   * all possibilities
+   */
+   public void mousePressed(MouseEvent e) {
+       checkPopup(e);
+   }
 
-	/**
-	 * Displays a message box giving the total number shapes in the current shape
-	 */
-	private void checkPopup(MouseEvent e) {
-		// Do it only if we have a request for a pop up menu
-		if (!e.isPopupTrigger()) {
-			return;
-		}
+   public void mouseClicked(MouseEvent e) {
+       checkPopup(e);
+   }
 
-		// Display the information about the shape currently painted
-		if (shape != null) {
-			int count = shape.countShapes();
-			popupLabel.setText("total number of shapes = " + count);
-			popup.show(e.getComponent(), e.getX(), e.getY());
-		}
-	}
+   public void mouseReleased(MouseEvent e) {
+       checkPopup(e);
+   }
 
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		if (shape != null) {
-			shape.update(slider.getValue());
-			repaint();
-		}
-	}
+   /**
+   * Displays a message box giving the total number shapes in the current shape
+   */
+   private void checkPopup(MouseEvent e) {
+       // Do it only if we have a request for a pop up menu, aka right click...
+       if (!e.isPopupTrigger()) {
+           return;
+       }
 
-	public void mouseExited(MouseEvent e) {
-	}
+       // Display the information about the shape currently painted
+       if (shape != null) {
+           int count = shape.countShapes();
+           popupLabel.setText("total number of shapes = " + count);
+           popup.show(e.getComponent(), e.getX(), e.getY());
+       }
+   }
 
-	public void mouseEntered(MouseEvent e) {
-	}
+   @Override
+   public void stateChanged(ChangeEvent e) {
+       if (shape != null) {
+           shape.update(slider.getValue());
+           repaint();
+       }
+   }
 
-	/**
-	 * Starts the application
-	 */
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new FractalDisplay());
-	}
+   public void mouseExited(MouseEvent e) {
+   }
+
+   public void mouseEntered(MouseEvent e) {
+   }
+
+   /**
+   * Starts the application
+   */
+   public static void main(String[] args) {
+       new FractalDisplay();
+   }
 }

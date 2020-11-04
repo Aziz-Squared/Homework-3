@@ -1,81 +1,90 @@
 package recur;
 
+
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Polygon;
+import java.util.Random;
 
 public class SierpinskiTriangle extends AbstractShape {
+	protected static final int maxLevel = 10; // The max depth of the tree from the root.
+	private int[] xPoints = new int[4]; // array of integers representing the x values of the triangles vertices.
+	private int[] yPoints = new int[4]; // array of integers representing the y values of the triangles vertices.
 
-	private Polygon poly;
-	private Point p1, p2, p3;
-
-	// Starting constructor to create the first triangle
-	SierpinskiTriangle() {
-		super(3, 10);
-		poly = new Polygon();
-		p1 = new Point(0, 800);
-		p2 = new Point(400, 0);
-		p3 = new Point(800, 800);
-		poly.addPoint(p1.x, p1.y);
-		poly.addPoint(p2.x, p2.y);
-		poly.addPoint(p3.x, p3.y);
-
-	}
 	/**
-	 * This second constructor is used to create the other triangles.
-	 * It takes in the new points of the new children triangle and does
-	 * what the first constructor does.
+	 * Construct the initial SierpinksiTriangle shape.
+	 *
+	 * @param width  The initial display width
+	 * @param height The initial display height
 	 */
-	SierpinskiTriangle(Point newPoint1, Point newPoint2, Point newPoint3) {
-		super(3, 10);
-		poly = new Polygon();
-		p1 = newPoint1;
-		p2 = newPoint2;
-		p3 = newPoint3;
-		poly.addPoint(p1.x, p1.y);
-		poly.addPoint(p2.x, p2.y);
-		poly.addPoint(p3.x, p3.y);
+	protected SierpinskiTriangle(int width, int height) {
+		// Height - 1 to prevents the line from being drawn outside the box;
+		// it seems the display box has a height of 800 but only displays [0,799]
+		// I'm not concerned with loosing the last pixel of the right side, so width was
+		// not adjusted.
 
+		this(new int[] { 0, width / 2, width, 0 }, // xPoints
+				new int[] { height - 1, 0, height - 1, height - 1 }, // yPoints
+				1.0, // slider value
+				1 // starting level
+		);
 	}
 
-	// Draws the triangles and then also draws the children
-	public void draw(Graphics g) {
-
-		g.drawPolygon(poly);
-		if (children[0] != null) {
-
-			for (int i = 0; i <= children.length - 1; i++) {
-				children[i].draw(g);
-			}
-
-		}
-
-	}
 	/**
-	 * Creates the new children and uses the second constructor 
-	 * to do this. The mid points are also assigned to new points
+	 * Construct a new SierpinksiTriangle.
+	 *
+	 * This constructor is used for creating children.
+	 *
+	 * @param xPoints   array of integers representing the x values of the triangles
+	 *                  vertices.
+	 * @param yPoints   array of integers representing the y values of the triangles
+	 *                  vertices.
+	 * @param sliderVal The value of the slider
+	 * @param level     The depth of this shape in relation to the root.
+	 *
 	 */
-	public void createChildren() {
-
-		Point p4 = new Point(midPoint(p1, p2));
-		Point p5 = new Point(midPoint(p2, p3));
-		Point p6 = new Point(midPoint(p1, p3));
-
-		children[0] = new SierpinskiTriangle(p2, p4, p5);
-		children[1] = new SierpinskiTriangle(p1, p4, p6);
-		children[2] = new SierpinskiTriangle(p6, p5, p3);
-
+	protected SierpinskiTriangle(int[] xPoints, int[] yPoints, double sliderVal, int level) {
+		super(maxLevel, level);
+		this.xPoints = xPoints;
+		this.yPoints = yPoints;
+		this.sliderVal = sliderVal;
 	}
 
-	// Finds the midpoint between two points
-	public static Point midPoint(Point p1, Point p2) {
-		return new Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
-	}
-
+	/**
+	 * Create a new set of children.
+	 */
 	@Override
-	public void update(int value) {
-		// TODO Auto-generated method stub
+	public void createChildren() {
+		this.children = new AbstractShape[3];
+		int newLevel = level + 1;
+
+		int[] sharedX = new int[] { (int) ((xPoints[1] - xPoints[0]) / 2.0 * sliderVal) + xPoints[0],
+				(int) ((xPoints[2] - xPoints[1]) / 2.0 * sliderVal) + xPoints[1],
+				(int) (xPoints[2] + ((xPoints[0] - xPoints[2]) / 2.0 * sliderVal)) };
+
+		int[] sharedY = new int[] { (int) (yPoints[0] - ((yPoints[0] - yPoints[1]) / 2.0 * sliderVal)),
+				(int) (yPoints[1] + ((yPoints[2] - yPoints[1]) / 2.0 * sliderVal)),
+				(int) (yPoints[2] + ((yPoints[0] - yPoints[2]) / 2.0 * sliderVal)) };
+
+		children[0] = new SierpinskiTriangle(new int[] { xPoints[0], sharedX[0], sharedX[2], xPoints[3] },
+				new int[] { yPoints[0], sharedY[0], sharedY[2], yPoints[3] }, sliderVal, newLevel);
+
+		children[1] = new SierpinskiTriangle(new int[] { sharedX[0], xPoints[1], sharedX[1], sharedX[0] },
+				new int[] { sharedY[0], yPoints[1], sharedY[1], sharedY[0] }, sliderVal, newLevel);
+
+		children[2] = new SierpinskiTriangle(new int[] { sharedX[2], sharedX[1], xPoints[2], sharedX[2] },
+				new int[] { sharedY[2], sharedY[1], yPoints[2], sharedY[2] }, sliderVal, newLevel);
 
 	}
+
+   /**
+   * Draw the base shape
+   */
+   @Override
+   protected void drawBaseShape(Graphics g) {
+       g.drawPolyline(xPoints, yPoints, 4);
+   }
 
 }
+
+

@@ -2,82 +2,62 @@ package recur;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
+
+
 
 public class KochCurve extends AbstractShape {
-	
-	int ax, ay, bx, by;
-	
-	int height, width;
+	protected static final int maxLevel = 7;
+	int x1cord, y1cord, x2cord, y2cord;
+
+	/**
+	 * Construct a new MyShape. This constructor is for the initial root shape.
+	 *
+	 * @param width  The width of the display.
+	 * @param height The height of the display.
+	 */
 
 	KochCurve(int height, int width) {
-		super(4, 10);
-		
-		this.height = height;
-		this.width = width;
-		
-		this.ax = 10;
-		this.ay = height/2;
-	 	this.bx = width-30;
-		this.by = height/2+1;
-	}
-	
-	KochCurve(int  ax, int ay, int bx, int by) {
-		super(4, 10);
-		
-		this.ax = ax;
-		this.ay = ay;
-		this.bx  = bx;
-		this.by = by;
+		this(0, height / 2, width, height / 2 + 1, 1);
+
 	}
 
-	public void draw(Graphics g) {
-		g.drawLine(ax,ay,bx,by);
-		if (children[0] != null) {
-			for (int i = 0; i <= children.length - 1; i++) {
-				children[i].draw(g);
-			}
-		}
+	KochCurve(int x1cord, int y1cord, int x2cord, int y2cord, int level) {
+		super(x1cord, y1cord, y2cord, y2cord, maxLevel, level);
+		this.x1cord = x1cord;
+		this.y1cord = y1cord;
+		this.x2cord = x2cord;
+		this.y2cord = y2cord;
 	}
-	
+
 	@Override
 	public void createChildren() {
+		this.children = new AbstractShape[4];
+		int newlevel = level + 1;
 		double sqrt3 = Math.sqrt(3);
 
-		double cx = (2 * ax + bx) / 3;
-		double cy = (2 * ay + by) / 3;
+		double x3cord = (2 * x1cord + x2cord) / 3;
+		double y3cord = (2 * y1cord + y2cord) / 3;
 
-		double ex = (ax + 2 * bx) / 3;
-		double ey = (ay + 2 * by) / 3;
+		double x5cord = (x1cord + 2 * x2cord) / 3;
+		double y5cord = (y1cord + 2 * y2cord) / 3;
 
-		double hx = (ax + bx) / 2;
-		double hy = (ay + by) / 2;
+		double x6cord = (x1cord + x2cord) / 2;
+		double y6cord = (y1cord + y2cord) / 2;
 
-		double dx = hx + sqrt3 * (ey - hy);
-		double dy = hy - sqrt3 * (ex - hx);
+		double x4cord = x6cord + sqrt3 * (y5cord - y6cord);
+		double y4cord = y6cord - sqrt3 * (x5cord - x6cord);
+
+		children[0] = new KochCurve(x1cord, y1cord, (int) x3cord, (int) y3cord, newlevel);
+		children[1] = new KochCurve((int) x3cord, (int) y3cord, (int) x4cord, (int) y4cord, newlevel);
+		children[2] = new KochCurve((int) x4cord, (int) y4cord, (int) x5cord, (int) y5cord, newlevel);
+		children[3] = new KochCurve((int) x5cord, (int) y5cord, x2cord, y2cord, newlevel);
+	}
 		
-		children[0] = new KochCurve(ax, ay, (int)cx, (int)cy);
-		children[1] = new KochCurve((int)cx, (int)cy, (int)dx, (int)dy);
-		children[2] = new KochCurve((int)dx, (int)dy, (int)ex, (int)ey);
-		children[3] = new KochCurve((int)ex, (int)ey, bx, by);
-	}
+
 	
 	@Override
-	public int countShapes() {
-		int count = 0;
-		if (children[0] == null) {
-			return 1;
-		}
-		else {
-			for (int i = 0; i < children.length; i++) {
-				count = children.length * children[i].countShapes();			
-			}
-		} return count;
-	}
-	
-
-	@Override
-	public void update(int value) {
-		// TODO Auto-generated method stub
-
+	protected void drawBaseShape(Graphics g) {
+		g.drawLine(x1cord, y1cord, x2cord, y2cord);
 	}
 }
